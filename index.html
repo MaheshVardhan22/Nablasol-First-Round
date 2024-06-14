@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Step 1: Create a project -->
+        <div class="step" id="step1">
+            <h2>Create a project</h2>
+            <form id="projectForm">
+                <label for="projectName">Project Name:</label>
+                <input type="text" id="projectName" name="projectName" required>
+                
+                <label for="client">Client:</label>
+                <select id="client" name="client">
+                    <option value="">Select a client</option>
+                    <option value="new">TATA</option>
+                    <option value="new">JIO</option>
+                    <option value="new">APPLE</option>
+                    <option value="new">SAMSUNG</option>
+                    <option value="new">HCL</option>
+                </select>
+                
+                <label for="startDate">Date:</label>
+                <div class="dates">
+                    <input type="date" id="startDate" name="startDate" required><span>-</span>
+                    <input type="date" id="endDate" name="endDate" required>
+                </div>
+                
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes"></textarea>
+                
+                <button type="button" onclick="nextStep(2)">Next</button>
+            </form>
+        </div>
+        
+        <!-- Step 2: Project type -->
+        <div class="step" id="step2">
+            <h2>Project Type</h2>
+            <div class="type-selection">
+                <button type="button" class="type-btn" onclick="selectType('time')">Time & Materials</button>
+                <button type="button" class="type-btn" onclick="selectType('fixed')">Fixed Fee</button>
+                <button type="button" class="type-btn" onclick="selectType('nonbillable')">Non-Billable</button>
+            </div>
+            <div id="hourlyRateContainer">
+                <label for="hourlyRate">Project Hourly Rate:</label>
+                <input type="number" id="hourlyRate" name="hourlyRate" step="0.01">
+            </div>
+            <div id="budgetContainer">
+                <label for="budget">Budget:</label>
+                <input type="number" id="budget" name="budget" step="0.01">
+                
+                <label>
+                    <input type="checkbox" id="resetBudget" name="resetBudget">
+                    Budget resets every month
+                </label>
+                
+                <label>
+                    <input type="checkbox" id="alertBudget" name="alertBudget">
+                    Send email alerts if project exceeds <input type="number" id="alertPercentage" name="alertPercentage" value="80" step="0.01">% of budget
+                </label>
+            </div>
+            <button type="button" onclick="prevStep(1)">Back</button>
+            <button type="button" onclick="nextStep(3)">Next</button>
+        </div>
+        
+        <!-- Step 3: Select a view -->
+        <div class="step" id="step3">
+            <h2>Select a View</h2>
+            <div class="view-selection">
+                <button type="button" class="view-btn" onclick="selectView('list')">List</button>
+                <button type="button" class="view-btn" onclick="selectView('board')">Board</button>
+            </div>
+            <button type="button" onclick="prevStep(2)">Back</button>
+            <button type="button" onclick="nextStep(4)">Next</button>
+        </div>
+        
+        <!-- Step 4: Manage permissions -->
+        <div class="step" id="step4">
+            <h2>Who Can Manage Projects</h2>
+            <div class="permission-selection">
+                <button type="button" class="permission-btn" onclick="selectPermission('everyone')">Everyone</button>
+                <button type="button" class="permission-btn" onclick="selectPermission('admins')">Only Admins</button>
+                <button type="button" class="permission-btn" onclick="selectPermission('specific')">Only Specific People</button>
+            </div>
+            <button type="button" onclick="prevStep(3)">Back</button>
+            <button type="button" onclick="nextStep(5)">Next</button>
+        </div>
+        
+        <!-- Step 5: Add tasks and team members -->
+        <div class="step" id="step5">
+            <h2>Tasks</h2>
+            <input type="text" id="task" placeholder="Add a task">
+            <button type="button" onclick="addTask()">Add</button>
+            <ul id="taskList"></ul>
+            
+            <h2>Team</h2>
+            <input type="text" id="team" placeholder="Invite or Add a person">
+            <button type="button" onclick="addTeamMember()">Add</button>
+            <ul id="teamList"></ul>
+            
+            <button type="button" onclick="prevStep(4)">Back</button>
+            <button type="button" onclick="createProject()">Create Project</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
